@@ -7,27 +7,24 @@ when 'versions'
 when 'shell'
   Dir.chdir('/src')
   exec('bash')
-when 'brainfuck2'
+when 'brainfuck'
   case ARGV[1]
   when 'bench'
-    Dir.chdir('/src/brainfuck2')
-    exec('./build.sh && ./run.sh')
+    Dir.chdir('/src/brainfuck')
+    exec('make run')
   when 'mandel'
-    Dir.chdir('/src/brainfuck2')
-    exec('./build.sh && ./run2.sh')
+    Dir.chdir('/src/brainfuck')
+    exec('make run2')
   end
 when 'base64'
   Dir.chdir('/src/base64')
-  exec('./build.sh && ./run.sh')
-when 'havlak'
-  Dir.chdir('/src/havlak')
-  exec('./build.sh && ./run.sh')
+  exec('make run')
 when 'json'
   Dir.chdir('/src/json')
-  exec('./build.sh && ./run.sh')
+  exec('make run')
 when 'matmul'
   Dir.chdir('/src/matmul')
-  exec('./build.sh && ./run.sh')
+  exec('make run')
 end
 
 puts <<~USAGE
@@ -36,10 +33,9 @@ puts <<~USAGE
   Commands:
     versions              Print installed language versions
     shell                 Start the shell
-    brainfuck2 bench      Build and run Brainfuck2 bench.b benchmarks
-    brainfuck2 mandel     Build and run Brainfuck2 mandel.b benchmarks
+    brainfuck bench       Build and run Brainfuck bench.b benchmarks
+    brainfuck mandel      Build and run Brainfuck mandel.b benchmarks
     base64                Build and run Base64 benchmarks
     json                  Build and run Json benchmarks
     matmul                Build and run Matmul benchmarks
-    havlak                Build and run Havlak benchmarks
 USAGE

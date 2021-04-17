@@ -8,7 +8,7 @@ use std::fmt;
 use std::fs;
 use std::str;
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug, PartialEq)]
 pub struct Coordinate {
     x: f64,
     y: f64,
@@ -52,7 +52,7 @@ where
                 x: 0.0,
                 y: 0.0,
                 z: 0.0,
-                len: 1,
+                len: 0,
             };
             while let Some(v) = visitor.next_element::<Coordinate>()? {
                 ac.x += v.x;
@@ -76,17 +76,39 @@ fn notify(msg: &str) {
     }
 }
 
+fn calc(content: &str) -> Coordinate {
+    let test: TestStruct = serde_json::from_str(&content).unwrap();
+    let state = test.state;
+    let len = state.len as f64;
+    Coordinate {
+        x: state.x / len,
+        y: state.y / len,
+        z: state.z / len,
+    }
+}
+
 fn main() {
+    let right = Coordinate {
+        x: 2.0,
+        y: 0.5,
+        z: 0.25,
+    };
+    for v in &[
+        "{\"coordinates\":[{\"x\":2.0,\"y\":0.5,\"z\":0.25}]}",
+        "{\"coordinates\":[{\"y\":0.5,\"x\":2.0,\"z\":0.25}]}",
+    ] {
+        let left = calc(v);
+        if left != right {
+            eprintln!("{:?} != {:?}", left, right);
+            std::process::exit(-1);
+        }
+    }
+
     let content = fs::read_to_string("/tmp/1.json").unwrap();
 
-    notify(&format!("Rust Serde Custom\t{}", std::process::id()));
-
-    let test: TestStruct = serde_json::from_str(&content).unwrap();
-
-    let len = test.state.len as f64;
-    println!("{}", test.state.x / len);
-    println!("{}", test.state.y / len);
-    println!("{}", test.state.z / len);
-
+    notify(&format!("Rust (Serde Custom)\t{}", std::process::id()));
+    let results = calc(&content);
     notify("stop");
+
+    println!("{:?}", results);
 }

@@ -24,19 +24,19 @@ end
 LANGS = {
   'Rust' => -> { `rustc --version`.split[1] },
   'Vala' => -> { `vala --version`.split[1] },
-  'LDC' => lambda do
+  'D/ldc2' => lambda do
     line = `ldc2 -v -X -Xf=#{cat('ldc.json')} -Xi=compilerInfo`.split("\n")[1]
     line.match(/version\s+(.*)\s+\(/)[1]
   end,
   'Swift' => -> { `swift --version`.split("\n")[0].match(/\((.*)\)/)[1] },
   'MLton' => -> { `mlton`.split[1] },
-  'F# .NET Core' => lambda do
+  'F#/.NET Core' => lambda do
     fsharpc = File.join(dotnet_base_path, 'FSharp', 'fsc.exe')
     `dotnet #{fsharpc} --help | sed -n 1p`.match(/version\s(.*)/)[1]
   end,
-  'GCC' => -> { `gcc -dumpfullversion` },
-  'GCC Go' => -> { `gccgo -dumpfullversion` },
-  'GDC' => -> { `gdc -dumpfullversion` },
+  'C/gcc' => -> { `gcc -dumpfullversion` },
+  'Go/gccgo' => -> { `gccgo -dumpfullversion` },
+  'D/gdc' => -> { `gdc -dumpfullversion` },
   'Nim' => lambda do
     `nim c --verbosity:0 --hint[Processing]:off \
            -r #{cat('nim.nim', 'echo NimVersion')}`
@@ -55,12 +55,12 @@ LANGS = {
     GO
     `go run #{cat('go.go', prog)}`
   end,
-  'DMD' => lambda do
+  'D/dmd' => lambda do
     json = `dmd -X -Xf=#{cat('dmd.json')} -Xi=compilerInfo \
       && cat #{cat('dmd.json')}`
     JSON.parse(json)['compilerInfo']['version']
   end,
-  'Clang' => lambda do
+  'C/clang' => lambda do
     prog = <<~CLANG
       #include <stdio.h>
       int main(void) {
@@ -75,7 +75,7 @@ LANGS = {
   'Python' => lambda do
     `python3 -c "import platform;print(platform.python_version())"`
   end,
-  'PyPy' => lambda do
+  'Python/pypy' => lambda do
     prog = <<~PYPY
       import platform, sys
       pypy = "%d.%d.%d-%s%d" % sys.pypy_version_info
@@ -84,8 +84,8 @@ LANGS = {
     `pypy3 #{cat('pypy.py', prog)}`
   end,
   'Ruby' => -> { `ruby -e 'puts "#{RUBY_VERSION}p#{RUBY_PATCHLEVEL}"'` },
-  'JRuby' => -> { `jruby -e 'puts JRUBY_VERSION'` },
-  'TruffleRuby' => -> { `truffleruby -e 'puts RUBY_ENGINE_VERSION'` },
+  'Ruby/jruby' => -> { `jruby -e 'puts JRUBY_VERSION'` },
+  'Ruby/truffleruby' => -> { `truffleruby -e 'puts RUBY_ENGINE_VERSION'` },
   'Java' => lambda do
     prog = <<~JAVA
       class Test {
@@ -97,33 +97,29 @@ LANGS = {
     `java #{cat('java.java', prog)}`
   end,
   'Julia' => -> { `julia -E 'VERSION'` },
-  'C# Mono' => -> { `mono --version=number` },
+  'C#/Mono' => -> { `mono --version=number` },
   '.NET Core' => -> { `dotnet --version` },
-  'C# .NET Core' => lambda do
+  'C#/.NET Core' => lambda do
     csc = File.join(dotnet_base_path, 'Roslyn', 'bincore', 'csc.dll')
     `dotnet #{csc} -version`
   end,
   'Perl' => -> { `perl -e 'print $^V;'` },
   'Haskell' => -> { `ghc --numeric-version` },
   'Tcl' => -> { `echo 'puts "$tcl_version"' | tclsh` },
+  # TODO: remove JAVA_OPTS as soon as new Kotlin is released
+  # (see https://youtrack.jetbrains.com/issue/KT-43704)
   'Kotlin' => lambda do
-    prog = <<~KOTLIN
-      fun main(args: Array<String>){
-        println(KotlinVersion.CURRENT)
-      }
-    KOTLIN
-    `kotlinc #{cat('kt.kt', prog)} -include-runtime -d #{cat('kt.jar')} \
-     && java -jar #{cat('kt.jar')}`
+    `JAVA_OPTS="--illegal-access=permit" kotlin -e KotlinVersion.CURRENT`
   end,
   'PHP' => -> { `php -r "echo phpversion();"` },
   'Elixir' => -> { `elixir -e "IO.puts System.version"` },
   'Lua' => -> { `lua -e "print(_VERSION)"` },
-  'LuaJIT' => -> { `luajit -e "print(jit.version)"` },
+  'Lua/luajit' => -> { `luajit -e "print(jit.version)"` },
   'OCaml' => -> { `ocaml -vnum` },
   'Racket' => -> { `racket -e "(version)"` },
   'Chez Scheme' => -> { `scheme --version 2>&1` },
   'V' => -> { `v version`.split[1] },
-  'Clojure' => -> { `clojure -e '(clojure-version)'` }
+  'Clojure' => -> { `clojure -M -e '(clojure-version)'` }
 }.freeze
 
 def pad(num, str, padstr)
@@ -131,7 +127,7 @@ def pad(num, str, padstr)
 end
 
 def lpad(str, padstr = ' ')
-  pad(12, str, padstr)
+  pad(16, str, padstr)
 end
 
 def rpad(str, padstr = ' ')

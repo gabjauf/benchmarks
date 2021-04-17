@@ -2,17 +2,20 @@ require "json"
 require "socket"
 
 struct Coordinate
-  JSON.mapping({
-    x: Float64,
-    y: Float64,
-    z: Float64,
-  })
+  include JSON::Serializable
+
+  property x : Float64
+  property y : Float64
+  property z : Float64
+
+  def initialize(@x, @y, @z)
+  end
 end
 
 class Coordinates
-  JSON.mapping({
-    coordinates: {type: Array(Coordinate)},
-  })
+  include JSON::Serializable
+
+  property coordinates : Array(Coordinate)
 end
 
 def notify(msg)
@@ -25,23 +28,36 @@ def notify(msg)
   end
 end
 
-text = File.read("/tmp/1.json")
+def calc(text)
+  coordinates = Coordinates.from_json(text).coordinates
+  len = coordinates.size
+  x = y = z = 0
 
-pid = Process.pid
-notify("Crystal Schema\t#{pid}")
+  coordinates.each do |e|
+    x += e.x
+    y += e.y
+    z += e.z
+  end
 
-coordinates = Coordinates.from_json(text).coordinates
-len = coordinates.size
-x = y = z = 0
-
-coordinates.each do |e|
-  x += e.x
-  y += e.y
-  z += e.z
+  Coordinate.new(x / len, y / len, z / len)
 end
 
-p x / len
-p y / len
-p z / len
+class EntryPoint
+  right = Coordinate.new(2.0, 0.5, 0.25)
+  ["{\"coordinates\":[{\"x\":2.0,\"y\":0.5,\"z\":0.25}]}",
+   "{\"coordinates\":[{\"y\":0.5,\"x\":2.0,\"z\":0.25}]}"].each { |v|
+    left = calc(v)
+    if left != right
+      STDERR.puts "#{left} != #{right}"
+      exit(1)
+    end
+  }
 
-notify("stop")
+  text = File.read("/tmp/1.json")
+
+  notify("Crystal (Schema)\t#{Process.pid}")
+  results = calc(text)
+  notify("stop")
+
+  p results
+end

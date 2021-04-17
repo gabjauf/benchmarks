@@ -1,6 +1,10 @@
 undefine GHC_PACKAGE_PATH
 
-all:
-	cabal update
-	cabal build
-	cabal install --overwrite-policy=always --installdir=../
+build:
+	~/.cabal/bin/hlint .
+	cabal update -v0 --builddir=target
+	cabal build -v0 --builddir=target
+	cabal install -v0 --overwrite-policy=always --installdir=../target/ --builddir=target
+
+clean:
+	-rm -rf target

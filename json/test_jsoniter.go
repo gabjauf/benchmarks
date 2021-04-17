@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/json-iterator/go"
+	jsoniter "github.com/json-iterator/go"
 	"io/ioutil"
+	"log"
 	"net"
 	"os"
 	"strings"
@@ -25,21 +26,12 @@ func notify(msg string) {
 	}
 }
 
-func main() {
-	bytes, err := ioutil.ReadFile("/tmp/1.json")
-	if err != nil {
-		panic(fmt.Sprintf("%v", err))
-	}
-	content := string(bytes)
-	reader := strings.NewReader(content)
-
-	notify(fmt.Sprintf("Go jsoniter\t%d", os.Getpid()))
-
+func calc(reader *strings.Reader) Coordinate {
 	// Add jsoniter
 	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 
 	jobj := TestStruct{}
-	err = json.NewDecoder(reader).Decode(&jobj)
+	err := json.NewDecoder(reader).Decode(&jobj)
 	if err != nil {
 		panic(err)
 	}
@@ -53,7 +45,30 @@ func main() {
 	}
 
 	len := float64(len(jobj.Coordinates))
-	fmt.Printf("%.8f\n%.8f\n%.8f\n", x/len, y/len, z/len)
+	return Coordinate{x / len, y / len, z / len}
+}
 
+func main() {
+	right := Coordinate{2.0, 0.5, 0.25}
+	for _, v := range []string{
+		`{"coordinates":[{"x":2.0,"y":0.5,"z":0.25}]}`,
+		`{"coordinates":[{"y":0.5,"x":2.0,"z":0.25}]}`} {
+		left := calc(strings.NewReader(v))
+		if left != right {
+			log.Fatalf("%+v != %+v\n", left, right)
+		}
+	}
+
+	bytes, err := ioutil.ReadFile("/tmp/1.json")
+	if err != nil {
+		panic(fmt.Sprintf("%v", err))
+	}
+	content := string(bytes)
+	reader := strings.NewReader(content)
+
+	notify(fmt.Sprintf("Go (jsoniter)\t%d", os.Getpid()))
+	results := calc(reader)
 	notify("stop")
+
+	fmt.Printf("%+v\n", results)
 }

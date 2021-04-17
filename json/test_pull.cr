@@ -1,8 +1,12 @@
 require "json"
 require "socket"
 
-len = 0
-x = y = z = 0
+struct Coordinate
+  property x, y, z
+
+  def initialize(@x : Float64, @y : Float64, @z : Float64)
+  end
+end
 
 def notify(msg)
   begin
@@ -14,28 +18,44 @@ def notify(msg)
   end
 end
 
-text = File.read("/tmp/1.json")
+def calc(text)
+  len = 0
+  x = y = z = 0
 
-pid = Process.pid
-notify("Crystal Pull\t#{pid}")
-
-pull = JSON::PullParser.new(text)
-pull.on_key!("coordinates") do
-  pull.read_array do
-    len += 1
-    pull.read_object do |key|
-      case key
-      when "x" then x += pull.read_float
-      when "y" then y += pull.read_float
-      when "z" then z += pull.read_float
-      else          pull.skip
+  pull = JSON::PullParser.new(text)
+  pull.on_key!("coordinates") do
+    pull.read_array do
+      len += 1
+      pull.read_object do |key|
+        case key
+        when "x" then x += pull.read_float
+        when "y" then y += pull.read_float
+        when "z" then z += pull.read_float
+        else          pull.skip
+        end
       end
     end
   end
+
+  Coordinate.new(x / len, y / len, z / len)
 end
 
-p x / len
-p y / len
-p z / len
+class EntryPoint
+  right = Coordinate.new(2.0, 0.5, 0.25)
+  ["{\"coordinates\":[{\"x\":2.0,\"y\":0.5,\"z\":0.25}]}",
+   "{\"coordinates\":[{\"y\":0.5,\"x\":2.0,\"z\":0.25}]}"].each { |v|
+    left = calc(v)
+    if left != right
+      STDERR.puts "#{left} != #{right}"
+      exit(1)
+    end
+  }
 
-notify("stop")
+  text = File.read("/tmp/1.json")
+
+  notify("Crystal (Pull)\t#{Process.pid}")
+  results = calc(text)
+  notify("stop")
+
+  p results
+end

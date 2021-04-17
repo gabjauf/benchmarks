@@ -1,36 +1,51 @@
-import core.stdc.stdio;
+import core.stdc.stdlib;
 import core.thread;
 import fast.json;
 import std.compiler;
+import std.conv;
 import std.file : readText;
 import std.format;
 import std.socket;
 import std.typecons;
+import std.stdio;
 
-struct Coord { double x, y, z; }
+struct Coordinate
+{
+    double x, y, z;
 
-void notify(string msg) {
-    try {
+    void toString(scope void delegate(const(char)[]) sink) const
+    {
+        sink("Coordinate {x: ");
+        sink(to!string(x));
+        sink(", y: ");
+        sink(to!string(y));
+        sink(", z: ");
+        sink(to!string(z));
+        sink("}");
+    }
+}
+
+void notify(string msg)
+{
+    try
+    {
         auto socket = new TcpSocket(new InternetAddress("localhost", 9001));
-        scope(exit) socket.close();
+        scope (exit)
+            socket.close();
         socket.send(msg);
-    } catch (SocketOSException) {
+    }
+    catch (SocketOSException)
+    {
         // standalone usage
     }
 }
 
-void main()
+Coordinate calc(string text)
 {
-    string text = readText("/tmp/1.json");
-    // We need to append 16 zero bytes for SSE to work
-    text ~= "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
-
-    notify("GDC fast\t%d".format(getpid()));
-
-    double x = 0, y = 0, z = 0;
+    auto x = 0.0, y = 0.0, z = 0.0;
 
     auto json = Json!(trustedSource, false)(text, No.simdPrep);
-    auto coords = json.coordinates.read!(Coord[]);
+    auto coords = json.coordinates.read!(Coordinate[]);
 
     foreach (ref coord; coords)
     {
@@ -40,7 +55,32 @@ void main()
     }
 
     auto len = coords.length;
-    printf("%.8f\n%.8f\n%.8f\n", x / len, y / len, z / len);
+    return Coordinate(x / len, y / len, z / len);
+}
 
+void main()
+{
+    auto right = Coordinate(2.0, 0.5, 0.25);
+    foreach (v; [
+            `{"coordinates":[{"x":2.0,"y":0.5,"z":0.25}]}`,
+            `{"coordinates":[{"y":0.5,"x":2.0,"z":0.25}]}`
+        ])
+    {
+        auto left = calc(v);
+        if (left != right)
+        {
+            stderr.writefln("%s != %s", left, right);
+            exit(1);
+        }
+    }
+
+    auto text = readText("/tmp/1.json");
+    // We need to append 16 zero bytes for SSE to work
+    text ~= "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
+
+    notify("D/gdc (fast)\t%d".format(getpid()));
+    immutable results = calc(text);
     notify("stop");
+
+    writeln(results);
 }
