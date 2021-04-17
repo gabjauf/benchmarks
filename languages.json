@@ -1,8 +1,38 @@
 [
-  { "name": "zig", "repository": "https://github.com/ziglang/zig", "compile": true },
-  { "name": "chapel", "repository": "https://github.com/chapel-lang/chapel", "compile": true },
-  { "name": "rust", "repository": "https://github.com/rust-lang/rust", "compile": true },
-  { "name": "go", "repository": "https://github.com/golang/go", "compile": true },
-  { "name": "nim", "repository": "https://github.com/nim-lang/Nim", "compile": true },
-  { "name": "elixir", "repository": "https://github.com/elixir-lang/elixir", "compile": true }
+  {
+    "name": "zig",
+    "repository": "https://github.com/ziglang/zig",
+    "compile": true
+  },
+  {
+    "name": "chapel",
+    "repository": "https://github.com/chapel-lang/chapel",
+    "compile": true
+  },
+  {
+    "name": "rust",
+    "repository": "https://github.com/rust-lang/rust",
+    "compile": true
+  },
+  {
+    "name": "go",
+    "repository": "https://github.com/golang/go",
+    "compile": true,
+    "packages": {
+      "nix": "nixpkgs.go"
+    }
+  },
+  {
+    "name": "nim",
+    "repository": "https://github.com/nim-lang/Nim",
+    "compile": true,
+    "packages": {
+      "nix": "nixpkgs.nim"
+    }
+  },
+  {
+    "name": "elixir",
+    "repository": "https://github.com/elixir-lang/elixir",
+    "compile": true
+  }
 ]
