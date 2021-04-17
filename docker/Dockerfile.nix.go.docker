@@ -1,17 +1,9 @@
-# from language-bench/brew
-# WORKDIR /app
-# RUN brew install go
-
-# from language-bench/perf
-# COPY ./base64 .
-# VOLUME ./results /app/results
-# COPY --from=0 /home/linuxbrew/.linuxbrew/Cellar/go/ /bin/go
-
-from language-bench-nix/perf
+FROM nixos/nix:latest
 COPY ./base64 .
 VOLUME ./results /app/results
 
+RUN nix-env -iA nixpkgs.linuxPackages.perf
 RUN nix-env -iA nixpkgs.go
 
-ENTRYPOINT ["sh"]
-# ENTRYPOINT ["perf", "stat", "go"]
+# ENTRYPOINT ["sh"]
+ENTRYPOINT ["perf", "stat", "go"]

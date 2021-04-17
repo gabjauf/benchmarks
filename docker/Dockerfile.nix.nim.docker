@@ -1,18 +1,9 @@
-# from language-bench/brew
-# WORKDIR /app
-# RUN brew install nim
-
-
-# from language-bench/perf
-# COPY --from=0 /home/linuxbrew/.linuxbrew/Cellar/nim/ .
-# RUN export PATH=$PATH:/home/linuxbrew/.linuxbrew/Cellar/nim/
-
-# ENTRYPOINT ["perf", "stat", "nim"]
-
-from language-bench-nix/perf
+FROM nixos/nix:latest
 COPY ./base64 .
 VOLUME ./results /app/results
 
+RUN nix-env -iA nixpkgs.linuxPackages.perf
 RUN nix-env -iA nixpkgs.nim
 
-ENTRYPOINT ["sh"]
+# ENTRYPOINT ["sh"]
+ENTRYPOINT ["perf", "stat", "go"]
