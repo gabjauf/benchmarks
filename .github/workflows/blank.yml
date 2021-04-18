@@ -29,9 +29,6 @@ jobs:
       - name: Build docker images
         run: ./build-docker.sh
 
-      - name: Enable the nasty stuff with docker
-        run: echo 1 > /proc/sys/kernel/perf_event_paranoid
-
       # Runs a set of commands using the runners shell
       - name: Run one container
         run: ./run-container.sh nim
