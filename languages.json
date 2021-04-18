@@ -20,6 +20,9 @@
     "compile": true,
     "packages": {
       "nix": "nixpkgs.go"
+    },
+    "commands": {
+      "compile": "build"
     }
   },
   {
@@ -28,6 +31,9 @@
     "compile": true,
     "packages": {
       "nix": "nixpkgs.nim"
+    },
+    "commands": {
+      "compile": "c"
     }
   },
   {
