@@ -1,9 +1,15 @@
 FROM nixos/nix:latest
-COPY ./base64 .
-VOLUME ./results /app/results
+
+WORKDIR /app
 
 RUN nix-env -iA nixpkgs.linuxPackages.perf
 RUN nix-env -iA nixpkgs.go
 
+COPY ./base64 .
+COPY run.sh ./run.sh
+# VOLUME ./results /app/results
+
+ENV LANG go
+
 # ENTRYPOINT ["sh"]
-ENTRYPOINT ["perf", "stat", "go"]
+ENTRYPOINT ["sh", "run.sh"]
