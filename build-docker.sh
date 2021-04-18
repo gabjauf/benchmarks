@@ -1,7 +1,7 @@
 # docker build -t language-bench-debian/perf -f Dockerfile.debian.perf .
 # docker build -t language-bench-nix/perf -f Dockerfile.nix.perf .
+LANGUAGE=$1
 
-docker build -t language-bench-nix/go -f ./docker/Dockerfile.nix.go.docker .
-docker build -t language-bench-nix/nim -f ./docker/Dockerfile.nix.nim.docker .
+docker build -t language-bench-nix/$LANGUAGE -f ./docker/Dockerfile.nix.$LANGUAGE.docker .
 
 
