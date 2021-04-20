@@ -1,0 +1,20 @@
+# started on Tue Apr 20 21:27:21 2021
+
+
+ Performance counter stats for './bf':
+
+              2.92 msec task-clock                #    0.501 CPUs utilized          
+                37      context-switches          #    0.013 M/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+               265      page-faults               #    0.091 M/sec                  
+   <not supported>      cycles                                                      
+   <not supported>      instructions                                                
+   <not supported>      branches                                                    
+   <not supported>      branch-misses                                               
+
+       0.005820000 seconds time elapsed
+
+       0.001913000 seconds user
+       0.001913000 seconds sys
+
+

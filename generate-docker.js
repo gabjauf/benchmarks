@@ -14,8 +14,8 @@ function getTemplate(lang) {
   RUN nix-env -iA nixpkgs.linuxPackages.perf
   RUN nix-env -iA ${lang.packages.nix}
   
-  COPY ./base64 .
-  COPY run.sh ./run.sh
+  COPY ./benchmarks ./benchmarks
+  COPY ./docker/runners/run.${lang.name}.sh ./run.sh
   # VOLUME ./results /app/results
   
   ENV LANG ${lang.name}

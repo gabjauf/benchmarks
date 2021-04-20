@@ -2,17 +2,26 @@
   {
     "name": "zig",
     "repository": "https://github.com/ziglang/zig",
-    "compile": true
-  },
-  {
-    "name": "chapel",
-    "repository": "https://github.com/chapel-lang/chapel",
-    "compile": true
+    "compile": true,
+    "packages": {
+      "nix": "nixpkgs.zig"
+    },
+    "extension": "zig",
+    "commands": {
+      "compile": "zig build"
+    }
   },
   {
     "name": "rust",
     "repository": "https://github.com/rust-lang/rust",
-    "compile": true
+    "compile": true,
+    "packages": {
+      "nix": "nixpkgs.rustc nixpkgs.gcc nixpkgs.cargo"
+    },
+    "extension": "rs",
+    "commands": {
+      "compile": "rustc"
+    }
   },
   {
     "name": "go",
@@ -21,8 +30,9 @@
     "packages": {
       "nix": "nixpkgs.go"
     },
+    "extension": "go",
     "commands": {
-      "compile": "build"
+      "compile": "go build"
     }
   },
   {
@@ -33,12 +43,16 @@
       "nix": "nixpkgs.nim"
     },
     "commands": {
-      "compile": "c"
-    }
+      "compile": "nim c"
+    },
+    "extension": "nim"
   },
   {
     "name": "elixir",
     "repository": "https://github.com/elixir-lang/elixir",
-    "compile": true
+    "compile": false,
+    "packages": {
+      "nix": "nixpkgs.elixir"
+    }
   }
 ]

@@ -1,0 +1,15 @@
+FROM nixos/nix:latest
+  
+  WORKDIR /app
+  
+  RUN nix-env -iA nixpkgs.linuxPackages.perf
+  RUN nix-env -iA nixpkgs.go
+  
+  COPY ./benchmarks ./benchmarks
+  COPY ./docker/runners/run.go.sh ./run.sh
+  # VOLUME ./results /app/results
+  
+  ENV LANG go
+  
+  # ENTRYPOINT ["sh"]
+  ENTRYPOINT ["sh", "run.sh"]

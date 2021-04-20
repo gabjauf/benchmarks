@@ -1,0 +1,20 @@
+# started on Sun Apr 18 18:29:16 2021
+
+
+ Performance counter stats for 'elixir c test.elixir':
+
+            524.43 msec task-clock                #    1.727 CPUs utilized          
+              1400      context-switches          #    0.003 M/sec                  
+                41      cpu-migrations            #    0.078 K/sec                  
+             13556      page-faults               #    0.026 M/sec                  
+   <not supported>      cycles                                                      
+   <not supported>      instructions                                                
+   <not supported>      branches                                                    
+   <not supported>      branch-misses                                               
+
+       0.303617500 seconds time elapsed
+
+       0.294389000 seconds user
+       0.120771000 seconds sys
+
+

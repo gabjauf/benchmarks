@@ -1,0 +1,15 @@
+FROM nixos/nix:latest
+  
+  WORKDIR /app
+  
+  RUN nix-env -iA nixpkgs.linuxPackages.perf
+  RUN nix-env -iA nixpkgs.rustc nixpkgs.gcc nixpkgs.cargo
+  
+  COPY ./benchmarks ./benchmarks
+  COPY ./docker/runners/run.rust.sh ./run.sh
+  # VOLUME ./results /app/results
+  
+  ENV LANG rust
+  
+  # ENTRYPOINT ["sh"]
+  ENTRYPOINT ["sh", "run.sh"]

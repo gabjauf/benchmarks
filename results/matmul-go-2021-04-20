@@ -1,0 +1,20 @@
+# started on Tue Apr 20 21:27:22 2021
+
+
+ Performance counter stats for './matmul':
+
+             11.30 msec task-clock                #    0.883 CPUs utilized          
+               134      context-switches          #    0.012 M/sec                  
+                 1      cpu-migrations            #    0.088 K/sec                  
+               585      page-faults               #    0.052 M/sec                  
+   <not supported>      cycles                                                      
+   <not supported>      instructions                                                
+   <not supported>      branches                                                    
+   <not supported>      branch-misses                                               
+
+       0.012805100 seconds time elapsed
+
+       0.006147000 seconds user
+       0.007172000 seconds sys
+
+

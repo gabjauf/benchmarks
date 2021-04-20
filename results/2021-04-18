@@ -1,0 +1,14 @@
+CC: stdlib_assertions.nim
+CC: stdlib_dollars.nim
+CC: stdlib_io.nim
+CC: stdlib_system.nim
+CC: stdlib_base64.nim
+CC: stdlib_parseutils.nim
+CC: stdlib_unicode.nim
+CC: stdlib_strutils.nim
+CC: stdlib_times.nim
+CC: stdlib_strformat.nim
+CC: stdlib_os.nim
+CC: stdlib_nativesockets.nim
+CC: stdlib_net.nim
+CC: test.nim
