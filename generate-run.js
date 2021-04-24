@@ -10,14 +10,17 @@ function getResultsFileName(lang) {
 
 function getCompileTemplate(lang) {
   return `
-    perf stat -o $filename ${lang.commands.compile} $file
-    perf stat -o $filename ./$(basename $file .${lang.extension})
+    perf stat -o ./res ${lang.commands.compile} $file
+    cat ./res | /app/run.js >> $filename
+    perf stat -o ./res ./$(basename $file .${lang.extension})
+    cat ./res | /app/run.js >> $filename
   `;
 }
 
 function getRegularTemplate(lang) {
   return `
-    perf stat -o $filename $LANG
+    perf stat -o ./res $BENCHMARKED_LANG 
+    cat ./res | /app/run.js >> $filename
   `;
 }
 
@@ -33,7 +36,7 @@ function getTemplate(lang) {
 
       touch $filename
       cd $dir
-        for file in $(find -type f -name "*.${lang.extension}");
+      for file in $(find -type f -name "*.${lang.extension}");
       do
       ${lang.compile ? getCompileTemplate(lang) : getRegularTemplate(lang)}
       done;

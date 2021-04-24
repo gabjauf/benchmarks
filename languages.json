@@ -8,7 +8,8 @@
     },
     "extension": "zig",
     "commands": {
-      "compile": "zig build"
+      "compile": "zig build",
+      "version": "zig version"
     }
   },
   {
@@ -20,7 +21,8 @@
     },
     "extension": "rs",
     "commands": {
-      "compile": "rustc"
+      "compile": "rustc",
+      "version": "rustc version"
     }
   },
   {
@@ -32,7 +34,8 @@
     },
     "extension": "go",
     "commands": {
-      "compile": "go build"
+      "compile": "go build",
+      "version": "go version"
     }
   },
   {
@@ -43,7 +46,8 @@
       "nix": "nixpkgs.nim"
     },
     "commands": {
-      "compile": "nim c"
+      "compile": "nim c",
+      "version": "nim v"
     },
     "extension": "nim"
   },
@@ -53,6 +57,10 @@
     "compile": false,
     "packages": {
       "nix": "nixpkgs.elixir"
-    }
+    },
+    "commands": {
+      "version": "elixir version"
+    },
+    "extension": "ex"
   }
 ]

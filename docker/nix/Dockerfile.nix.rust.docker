@@ -1,15 +1,15 @@
-FROM nixos/nix:latest
+FROM language-bench-nix/perf
   
   WORKDIR /app
+  ENV BENCHMARKED_LANG rust
   
-  RUN nix-env -iA nixpkgs.linuxPackages.perf
   RUN nix-env -iA nixpkgs.rustc nixpkgs.gcc nixpkgs.cargo
+  COPY ./package.json ./package.json
+  RUN npm i
   
   COPY ./benchmarks ./benchmarks
-  COPY ./docker/runners/run.rust.sh ./run.sh
+  COPY ./run.js ./run.js
+  COPY ./languages.json ./languages.json
   # VOLUME ./results /app/results
   
-  ENV LANG rust
-  
-  # ENTRYPOINT ["sh"]
-  ENTRYPOINT ["sh", "run.sh"]
+  ENTRYPOINT ["./run.js"]

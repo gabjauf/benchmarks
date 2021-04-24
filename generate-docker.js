@@ -7,21 +7,21 @@ const directory = `${__dirname}/docker/nix/`;
 
 function getTemplate(lang) {
   return `
-  FROM nixos/nix:latest
+  FROM language-bench-nix/perf
   
   WORKDIR /app
+  ENV BENCHMARKED_LANG ${lang.name}
   
-  RUN nix-env -iA nixpkgs.linuxPackages.perf
   RUN nix-env -iA ${lang.packages.nix}
+  COPY ./package.json ./package.json
+  RUN npm i
   
   COPY ./benchmarks ./benchmarks
-  COPY ./docker/runners/run.${lang.name}.sh ./run.sh
+  COPY ./run.js ./run.js
+  COPY ./languages.json ./languages.json
   # VOLUME ./results /app/results
   
-  ENV LANG ${lang.name}
-  
-  # ENTRYPOINT ["sh"]
-  ENTRYPOINT ["sh", "run.sh"]
+  ENTRYPOINT ["./run.js"]
   `.trim();
 }
 

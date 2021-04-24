@@ -1,15 +1,15 @@
-FROM nixos/nix:latest
+FROM language-bench-nix/perf
   
   WORKDIR /app
+  ENV BENCHMARKED_LANG elixir
   
-  RUN nix-env -iA nixpkgs.linuxPackages.perf
   RUN nix-env -iA nixpkgs.elixir
+  COPY ./package.json ./package.json
+  RUN npm i
   
   COPY ./benchmarks ./benchmarks
-  COPY ./docker/runners/run.elixir.sh ./run.sh
+  COPY ./run.js ./run.js
+  COPY ./languages.json ./languages.json
   # VOLUME ./results /app/results
   
-  ENV LANG elixir
-  
-  # ENTRYPOINT ["sh"]
-  ENTRYPOINT ["sh", "run.sh"]
+  ENTRYPOINT ["./run.js"]
