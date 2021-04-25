@@ -22,7 +22,7 @@
     "extension": "rs",
     "commands": {
       "compile": "rustc",
-      "version": "rustc version"
+      "version": "rustc --version"
     }
   },
   {
@@ -59,7 +59,7 @@
       "nix": "nixpkgs.elixir"
     },
     "commands": {
-      "version": "elixir version"
+      "version": "elixir --version"
     },
     "extension": "ex"
   }
