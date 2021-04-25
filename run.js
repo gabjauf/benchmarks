@@ -6,10 +6,12 @@ const execSync = require('child_process').execSync;
 const languages = require('./languages.json');
 
 const lang = process.env.BENCHMARKED_LANG;
+const OS = process.env.OS;
 
 const langConfig = languages.find(el => el.name === lang);
 
-const version = execSync(langConfig.commands.version).toString();
+const versionRegex = /(?:0|[1-9]\d*)(?:\.(?:0|[1-9]\d*)){2}/;
+const version = execSync(langConfig.commands.version).toString().match(versionRegex)[0];
 
 const benchmarks = fs.readdirSync(`${__dirname}/benchmarks`, { withFileTypes: true })
   .filter(dirent => dirent.isDirectory())
@@ -18,20 +20,20 @@ const benchmarks = fs.readdirSync(`${__dirname}/benchmarks`, { withFileTypes: tr
 benchmarks.forEach(bench => {
   glob(`${__dirname}/benchmarks/${bench}/*.${langConfig.extension}`).then(files => {
     files.forEach(file => {
-      const outputFileName = `${__dirname}/results/${getBasename(file)}-${langConfig.name}`;
+      const outputFileName = `${__dirname}/results/${OS}-${getBasenameWithoutExtension(file)}-${langConfig.name}`;
       if (langConfig.compile) {
-        execSync(`perf stat -o ${__dirname}/tmp ${langConfig.commands.compile} ${file}`);
-        const compileRes = execSync(`cat ${__dirname}/tmp`).toString();
-        appendToFile(outputFileName, formatPerfOutput(compileRes));
-        execSync(`perf stat -o ${__dirname}/tmp ${__dirname}/${getBasename(file)}`);
-        const res = execSync(`cat ${__dirname}/tmp`).toString();
-        appendToFile(outputFileName, formatPerfOutput(res));
+        const compileRes = execPerf(`${langConfig.commands.compile} ${path.basename(file)}`, { cwd: `${__dirname}/benchmarks/${bench}`});
+        const compiledData = parsePerfOutput(compileRes);
+        const res = execPerf(`./${getBasenameWithoutExtension(file)}`, { cwd: `${__dirname}/benchmarks/${bench}`});
+        const executionData = parsePerfOutput(res);
+        appendToFile(outputFileName, formatOutput(executionData, compiledData));
       } else {
-        execSync(`perf stat -o ${__dirname}/tmp ${langConfig.name} ${file}`).toString();
-        const res = execSync(`cat ${__dirname}/tmp`).toString();
-        appendToFile(outputFileName, formatPerfOutput(res));
+        const res = execPerf(`${langConfig.name} ${path.basename(file)}`);
+        appendToFile(outputFileName, formatOutput(parsePerfOutput(res)));
       }
     });
+  }).catch(err => {
+    console.error(err);
   });
 });
 
@@ -47,10 +49,24 @@ const measuresMap = {
 
 /**
  * 
+ * @param {string} command 
+ * @returns {string}
+ */
+function execPerf(command, options) {
+  try {
+    execSync(`perf stat -o ${__dirname}/tmp ${command}`, options);
+  } catch (e) {
+    throw e;
+  }
+  const res = execSync(`cat ${__dirname}/tmp`).toString();
+  return res;
+}
+
+/**
+ * 
  * @param {string} filename 
  */
-function getBasename(filename) {
-  console.log("FILENAME", filename);
+function getBasenameWithoutExtension(filename) {
   return path.basename(filename).replace(`.${langConfig.extension}`, '');
 }
 
@@ -59,7 +75,7 @@ function getBasename(filename) {
  * @param {string} file 
  * @param {string} appendFile 
  */
-function appendToFile(file, appendFile){
+function appendToFile(file, appendFile) {
   // const data = fs.readFileSync(file);
   fs.appendFileSync(file, appendFile);
 }
@@ -69,19 +85,46 @@ function appendToFile(file, appendFile){
  * 
  * @param {string} data 
  */
-function formatPerfOutput(data) {
-  console.log("DATATATATATA", data);
-  const lines = data.split('\n');
+function formatOutput(executionData, compilingData) {
   let res = [];
-  res.push(extractLineStat(lines[measuresMap['time elapsed']]));
-  res.push(extractLineStat(lines[measuresMap['user']]));
-  res.push(extractLineStat(lines[measuresMap['system']]));
-  res.push(extractLineStat(lines[measuresMap['task-clock']]));
-  res.push(extractLineStat(lines[measuresMap['context-switches']]));
-  res.push(extractLineStat(lines[measuresMap['cpu-migrations']]));
-  res.push(extractLineStat(lines[measuresMap['page-faults']]));
+  res.push(new Date());
+  res.push(lang);
+  res.push(version);
+  res.push(...dataToArray(executionData));
+  res.push(...dataToArray(compilingData));
   return res.join(";") + '\n';
 }
+
+/**
+ * 
+ * @param {string} perfOutput 
+ */
+function parsePerfOutput(perfOutput) {
+  const lines = perfOutput.split('\n');
+  return {
+    'time elapsed': extractLineStat(lines[14]),
+    'user': extractLineStat(lines[16]),
+    'system': extractLineStat(lines[17]),
+    'task-clock': extractLineStat(lines[5]),
+    'context-switches': extractLineStat(lines[6]),
+    'cpu-migrations': extractLineStat(lines[7]),
+    'page-faults': extractLineStat(lines[8]),
+  };
+}
+
+/**
+ * 
+ * @param {Object} data 
+ * @returns {Array}
+ */
+function dataToArray(data) {
+  if (!data) {
+    return [];
+  }
+  return Object.values(data);
+}
+
+
 
 /**
  * 
@@ -92,7 +135,7 @@ function extractLineStat(line) {
 }
 
 module.exports = {
-  formatPerfOutput,
+  parsePerfOutput,
   getTimeElapsed: extractLineStat,
-  getBasename,
+  getBasename: getBasenameWithoutExtension,
 };

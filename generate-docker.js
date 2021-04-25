@@ -11,6 +11,7 @@ function getTemplate(lang) {
   
   WORKDIR /app
   ENV BENCHMARKED_LANG ${lang.name}
+  ENV OS nix
   
   RUN nix-env -iA ${lang.packages.nix}
   COPY ./package.json ./package.json
