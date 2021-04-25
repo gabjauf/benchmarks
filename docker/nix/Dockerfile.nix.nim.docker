@@ -2,6 +2,7 @@ FROM language-bench-nix/perf
   
   WORKDIR /app
   ENV BENCHMARKED_LANG nim
+  ENV OS nix
   
   RUN nix-env -iA nixpkgs.nim
   COPY ./package.json ./package.json

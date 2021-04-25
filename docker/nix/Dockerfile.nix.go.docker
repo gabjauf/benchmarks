@@ -2,6 +2,7 @@ FROM language-bench-nix/perf
   
   WORKDIR /app
   ENV BENCHMARKED_LANG go
+  ENV OS nix
   
   RUN nix-env -iA nixpkgs.go
   COPY ./package.json ./package.json

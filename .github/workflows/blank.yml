@@ -1,38 +1,51 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
-
-# Controls when the action will run. 
-on:
-  # Triggers the workflow on push or pull request events but only for the master branch
+'on':
   push:
-    branches: [ master, testing ]
+    branches:
+      - master
+      - testing
   pull_request:
-    branches: [ master ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+    branches:
+      - master
+  workflow_dispatch: null
 jobs:
-  # This workflow contains a single job called "build"
-  nim:
+  zig:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
       - name: Build docker images
-        run: ./build-docker.sh nim
-
+        run: ./build-docker.sh zig
       - name: Run one container
-        run: ./run-container.sh nim
+        run: ./run-container.sh zig
+  rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build docker images
+        run: ./build-docker.sh rust
+      - name: Run one container
+        run: ./run-container.sh rust
   go:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
       - name: Build docker images
         run: ./build-docker.sh go
-
       - name: Run one container
         run: ./run-container.sh go
+  nim:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build docker images
+        run: ./build-docker.sh nim
+      - name: Run one container
+        run: ./run-container.sh nim
+  elixir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build docker images
+        run: ./build-docker.sh elixir
+      - name: Run one container
+        run: ./run-container.sh elixir
