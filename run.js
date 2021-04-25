@@ -9,7 +9,7 @@ const lang = process.env.BENCHMARKED_LANG;
 
 const langConfig = languages.find(el => el.name === lang);
 
-const version = execSync(langConfig.commands.version);
+const version = execSync(langConfig.commands.version).toString();
 
 const benchmarks = fs.readdirSync(`${__dirname}/benchmarks`, { withFileTypes: true })
   .filter(dirent => dirent.isDirectory())

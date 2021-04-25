@@ -47,7 +47,7 @@
     },
     "commands": {
       "compile": "nim c",
-      "version": "nim v"
+      "version": "nim -v"
     },
     "extension": "nim"
   },
