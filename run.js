@@ -28,7 +28,7 @@ benchmarks.forEach(bench => {
         const executionData = parsePerfOutput(res);
         appendToFile(outputFileName, formatOutput(executionData, compiledData));
       } else {
-        const res = execPerf(`${langConfig.name} ${path.basename(file)}`);
+        const res = execPerf(`${langConfig.name} ${path.basename(file)}`, { cwd: `${__dirname}/benchmarks/${bench}`});
         appendToFile(outputFileName, formatOutput(parsePerfOutput(res)));
       }
     });
