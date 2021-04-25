@@ -15,7 +15,7 @@ function getTemplate(lang) {
   
   RUN nix-env -iA ${lang.packages.nix}
   COPY ./package.json ./package.json
-  RUN npm i
+  RUN npm i --only=production
   
   COPY ./benchmarks ./benchmarks
   COPY ./run.js ./run.js

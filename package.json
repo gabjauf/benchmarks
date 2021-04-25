@@ -17,8 +17,9 @@
   },
   "homepage": "https://github.com/gabjauf/benchmarks#readme",
   "dependencies": {
-    "bluebird": "^3.7.2",
-    "jest": "^26.6.3",
     "tiny-glob": "^0.2.8"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
   }
 }
