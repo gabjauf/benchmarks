@@ -37,7 +37,7 @@ function formatJobs() {
       ],
     };
   });
-  res['commit results'] = {
+  res['commit_results'] = {
     "runs-on": "ubuntu-latest",
     needs: languages.map(el => el.name),
     steps: [
