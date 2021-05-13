@@ -17,11 +17,15 @@ jobs:
         run: ./build-docker.sh zig
       - name: Run one container
         run: ./run-container.sh zig
+      - name: Configurate git
+        run: |-
+          git config --global user.name 'zig bot'
+                      git config --global user.email 'your-username@users.noreply.github.com'
+                      git config pull.rebase false
+                    
       - name: Commit results
         run: |-
-          git config --global user.name 'Your Name'
-                      git config --global user.email 'your-username@users.noreply.github.com'
-                      git add ./results
+          git add ./results
                       git commit -m "Results update for zig"
                       git pull
                       git push
@@ -34,11 +38,15 @@ jobs:
         run: ./build-docker.sh rust
       - name: Run one container
         run: ./run-container.sh rust
+      - name: Configurate git
+        run: |-
+          git config --global user.name 'rust bot'
+                      git config --global user.email 'your-username@users.noreply.github.com'
+                      git config pull.rebase false
+                    
       - name: Commit results
         run: |-
-          git config --global user.name 'Your Name'
-                      git config --global user.email 'your-username@users.noreply.github.com'
-                      git add ./results
+          git add ./results
                       git commit -m "Results update for rust"
                       git pull
                       git push
@@ -51,11 +59,15 @@ jobs:
         run: ./build-docker.sh go
       - name: Run one container
         run: ./run-container.sh go
+      - name: Configurate git
+        run: |-
+          git config --global user.name 'go bot'
+                      git config --global user.email 'your-username@users.noreply.github.com'
+                      git config pull.rebase false
+                    
       - name: Commit results
         run: |-
-          git config --global user.name 'Your Name'
-                      git config --global user.email 'your-username@users.noreply.github.com'
-                      git add ./results
+          git add ./results
                       git commit -m "Results update for go"
                       git pull
                       git push
@@ -68,11 +80,15 @@ jobs:
         run: ./build-docker.sh nim
       - name: Run one container
         run: ./run-container.sh nim
+      - name: Configurate git
+        run: |-
+          git config --global user.name 'nim bot'
+                      git config --global user.email 'your-username@users.noreply.github.com'
+                      git config pull.rebase false
+                    
       - name: Commit results
         run: |-
-          git config --global user.name 'Your Name'
-                      git config --global user.email 'your-username@users.noreply.github.com'
-                      git add ./results
+          git add ./results
                       git commit -m "Results update for nim"
                       git pull
                       git push
@@ -85,11 +101,15 @@ jobs:
         run: ./build-docker.sh elixir
       - name: Run one container
         run: ./run-container.sh elixir
+      - name: Configurate git
+        run: |-
+          git config --global user.name 'elixir bot'
+                      git config --global user.email 'your-username@users.noreply.github.com'
+                      git config pull.rebase false
+                    
       - name: Commit results
         run: |-
-          git config --global user.name 'Your Name'
-                      git config --global user.email 'your-username@users.noreply.github.com'
-                      git add ./results
+          git add ./results
                       git commit -m "Results update for elixir"
                       git pull
                       git push

@@ -28,10 +28,15 @@ function formatJobs() {
           run: `./run-container.sh ${langConfig.name}`,
         },
         {
-          name: "Commit results",
-          run: `git config --global user.name 'Your Name'
+          name: "Configurate git",
+          run: `git config --global user.name '${langConfig.name} bot'
             git config --global user.email 'your-username@users.noreply.github.com'
-            git add ./results
+            git config pull.rebase false
+          `
+        },
+        {
+          name: "Commit results",
+          run: `git add ./results
             git commit -m "Results update for ${langConfig.name}"
             git pull
             git push
