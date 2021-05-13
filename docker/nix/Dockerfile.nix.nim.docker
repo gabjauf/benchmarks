@@ -6,11 +6,10 @@ FROM language-bench-nix/perf
   
   RUN nix-env -iA nixpkgs.nim
   COPY ./package.json ./package.json
-  RUN npm i
+  RUN npm i --only=production
   
-  COPY ./benchmarks ./benchmarks
-  COPY ./run.js ./run.js
+  COPY ./src ./src
   COPY ./languages.json ./languages.json
   # VOLUME ./results /app/results
   
-  ENTRYPOINT ["./run.js"]
+  ENTRYPOINT ["./src/run.js"]
