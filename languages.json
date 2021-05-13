@@ -43,7 +43,7 @@
     "repository": "https://github.com/nim-lang/Nim",
     "compile": true,
     "packages": {
-      "nix": "nixpkgs.nim"
+      "nix": "nixpkgs.nim nixpkgs.gcc"
     },
     "commands": {
       "compile": "nim c",
