@@ -29,13 +29,12 @@ function formatJobs() {
         },
         {
           name: "Commit results",
-          run: `|
-            git config --global user.name 'Your Name'
+          run: `git config --global user.name 'Your Name'
             git config --global user.email 'your-username@users.noreply.github.com'
             git add ./results
             git commit -m "Results update for ${langConfig.name}"
             git push
-          `.toString()
+          `
         },
       ],
     };
