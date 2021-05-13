@@ -82,6 +82,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: results
+          path: results/
       - name: Configurate git
         run: |-
           git config --global user.name 'Benchmark bot'

@@ -48,6 +48,7 @@ function formatJobs() {
         uses: "actions/download-artifact@v2",
         with: {
           name: 'results',
+          path: 'results/'
         }
       },
       {
