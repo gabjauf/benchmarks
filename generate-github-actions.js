@@ -33,6 +33,7 @@ function formatJobs() {
             git config --global user.email 'your-username@users.noreply.github.com'
             git add ./results
             git commit -m "Results update for ${langConfig.name}"
+            git pull
             git push
           `
         },
