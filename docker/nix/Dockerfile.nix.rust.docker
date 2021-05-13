@@ -1,0 +1,15 @@
+FROM language-bench-nix/perf
+  
+  WORKDIR /app
+  ENV BENCHMARKED_LANG rust
+  ENV OS nix
+  
+  RUN nix-env -iA nixpkgs.rustc nixpkgs.gcc nixpkgs.cargo
+  COPY ./package.json ./package.json
+  RUN npm i --only=production
+  
+  COPY ./src ./src
+  COPY ./languages.json ./languages.json
+  # VOLUME ./results /app/results
+  
+  ENTRYPOINT ["./src/run.js"]

@@ -1,0 +1,26 @@
+{
+  "name": "benchmarks",
+  "version": "1.0.0",
+  "description": "Benchmarks for different languages",
+  "main": "generate-docker.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabjauf/benchmarks.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gabjauf/benchmarks/issues"
+  },
+  "homepage": "https://github.com/gabjauf/benchmarks#readme",
+  "dependencies": {
+    "tiny-glob": "^0.2.8"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "js-yaml": "^4.1.0"
+  }
+}

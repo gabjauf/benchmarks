@@ -6,7 +6,7 @@ require 'socket'
 
 PAGE_SIZE = `getconf PAGESIZE`.to_i
 HAS_MEM = File.file?('/proc/self/statm')
-RESULTS_LOG = 'target/results.log'
+RESULTS_LOG = './target/results.log'
 
 def read_mem(pid)
   if HAS_MEM
