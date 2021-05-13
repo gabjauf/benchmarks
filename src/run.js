@@ -51,7 +51,11 @@ if (require.main === module) {
   benchmarks.forEach(bench => {
     glob(`${__dirname}/benchmarks/${bench}/*.${langConfig.extension}`).then(files => {
       files.forEach(file => {
-        const outputFileName = `${__dirname}/../results/${OS}-${getBasenameWithoutExtension(file)}-${langConfig.name}.json`;
+        const outputDir = `${__dirname}/../results/${bench}`;
+        if (!fs.existsSync(outputDir)){
+          fs.mkdirSync(outputDir);
+        }
+        const outputFileName = `${outputDir}/${OS}-${getBasenameWithoutExtension(file)}-${langConfig.name}.json`;
         if (langConfig.compile) {
           const compileRes = benchmarker.exec(`${langConfig.commands.compile} ${path.basename(file)}`, { cwd: `${__dirname}/benchmarks/${bench}` });
           const compiledData = benchmarker.parseOutput(compileRes);
