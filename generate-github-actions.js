@@ -28,22 +28,41 @@ function formatJobs() {
           run: `./run-container.sh ${langConfig.name}`,
         },
         {
-          name: "Configurate git",
-          run: `git config --global user.name '${langConfig.name} bot'
-            git config --global user.email 'your-username@users.noreply.github.com'
-            git config pull.rebase false
-          `
-        },
-        {
-          name: "Commit results",
-          run: `git add ./results
-            git commit -m "Results update for ${langConfig.name}"
-            while ! git push; do git pull; done
-          `
-        },
+          uses: "actions/upload-artifact@v2",
+          with: {
+            name: 'results',
+            path: 'results/'
+          }
+        }
       ],
     };
   });
+  res['commit results'] = {
+    "runs-on": "ubuntu-latest",
+    needs: languages.map(el => el.name),
+    steps: [
+      {
+        uses: "actions/download-artifact@v2",
+        with: {
+          name: 'results',
+        }
+      },
+      {
+        name: "Configurate git",
+        run: `git config --global user.name 'Benchmark bot'
+          git config --global user.email 'your-username@users.noreply.github.com'
+          git config pull.rebase false
+        `
+      },
+      {
+        name: "Commit results",
+        run: `git add ./results
+          git commit -m "Benchmark result update"
+          while ! git push; do git pull; done
+        `
+      },
+    ]
+  }
   return res;
 }
 
