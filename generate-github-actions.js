@@ -38,8 +38,7 @@ function formatJobs() {
           name: "Commit results",
           run: `git add ./results
             git commit -m "Results update for ${langConfig.name}"
-            git pull
-            git push
+            while ! git push; do git pull; done
           `
         },
       ],

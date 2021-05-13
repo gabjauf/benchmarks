@@ -27,8 +27,7 @@ jobs:
         run: |-
           git add ./results
                       git commit -m "Results update for zig"
-                      git pull
-                      git push
+                      while ! git push; do git pull; done
                     
   rust:
     runs-on: ubuntu-latest
@@ -48,8 +47,7 @@ jobs:
         run: |-
           git add ./results
                       git commit -m "Results update for rust"
-                      git pull
-                      git push
+                      while ! git push; do git pull; done
                     
   go:
     runs-on: ubuntu-latest
@@ -69,8 +67,7 @@ jobs:
         run: |-
           git add ./results
                       git commit -m "Results update for go"
-                      git pull
-                      git push
+                      while ! git push; do git pull; done
                     
   nim:
     runs-on: ubuntu-latest
@@ -90,8 +87,7 @@ jobs:
         run: |-
           git add ./results
                       git commit -m "Results update for nim"
-                      git pull
-                      git push
+                      while ! git push; do git pull; done
                     
   elixir:
     runs-on: ubuntu-latest
@@ -111,6 +107,5 @@ jobs:
         run: |-
           git add ./results
                       git commit -m "Results update for elixir"
-                      git pull
-                      git push
+                      while ! git push; do git pull; done
                     
