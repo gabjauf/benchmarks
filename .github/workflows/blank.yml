@@ -19,7 +19,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: results
-          path: results/**/*.zig
+          path: results/**/*zig.json
   rust:
     runs-on: ubuntu-latest
     steps:
@@ -31,7 +31,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: results
-          path: results/**/*.rs
+          path: results/**/*rust.json
   go:
     runs-on: ubuntu-latest
     steps:
@@ -43,7 +43,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: results
-          path: results/**/*.go
+          path: results/**/*go.json
   nim:
     runs-on: ubuntu-latest
     steps:
@@ -55,7 +55,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: results
-          path: results/**/*.nim
+          path: results/**/*nim.json
   elixir:
     runs-on: ubuntu-latest
     steps:
@@ -67,7 +67,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: results
-          path: results/**/*.ex
+          path: results/**/*elixir.json
   commit_results:
     runs-on: ubuntu-latest
     needs:

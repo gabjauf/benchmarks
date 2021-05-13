@@ -31,7 +31,7 @@ function formatJobs() {
           uses: "actions/upload-artifact@v2",
           with: {
             name: 'results',
-            path: `results/**/*.${langConfig.extension}`
+            path: `results/**/*${langConfig.name}.json`
           }
         }
       ],
