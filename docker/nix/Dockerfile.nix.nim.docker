@@ -4,7 +4,7 @@ FROM language-bench-nix/perf
   ENV BENCHMARKED_LANG nim
   ENV OS nix
   
-  RUN nix-env -iA nixpkgs.nim
+  RUN nix-env -iA nixpkgs.nim nixpkgs.gcc
   COPY ./package.json ./package.json
   RUN npm i --only=production
   
