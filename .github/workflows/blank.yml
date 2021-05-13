@@ -18,14 +18,14 @@ jobs:
       - name: Run one container
         run: ./run-container.sh zig
       - name: Commit results
-        run:
-          - git config --global user.name 'Your Name'
-          - >-
-            git config --global user.email
-            'your-username@users.noreply.github.com'
-          - git add ./results
-          - git commit -m "Results update for zig"
-          - git push
+        run: |-
+          |
+                      git config --global user.name 'Your Name'
+                      git config --global user.email 'your-username@users.noreply.github.com'
+                      git add ./results
+                      git commit -m "Results update for zig"
+                      git push
+                    
   rust:
     runs-on: ubuntu-latest
     steps:
@@ -35,14 +35,14 @@ jobs:
       - name: Run one container
         run: ./run-container.sh rust
       - name: Commit results
-        run:
-          - git config --global user.name 'Your Name'
-          - >-
-            git config --global user.email
-            'your-username@users.noreply.github.com'
-          - git add ./results
-          - git commit -m "Results update for rust"
-          - git push
+        run: |-
+          |
+                      git config --global user.name 'Your Name'
+                      git config --global user.email 'your-username@users.noreply.github.com'
+                      git add ./results
+                      git commit -m "Results update for rust"
+                      git push
+                    
   go:
     runs-on: ubuntu-latest
     steps:
@@ -52,14 +52,14 @@ jobs:
       - name: Run one container
         run: ./run-container.sh go
       - name: Commit results
-        run:
-          - git config --global user.name 'Your Name'
-          - >-
-            git config --global user.email
-            'your-username@users.noreply.github.com'
-          - git add ./results
-          - git commit -m "Results update for go"
-          - git push
+        run: |-
+          |
+                      git config --global user.name 'Your Name'
+                      git config --global user.email 'your-username@users.noreply.github.com'
+                      git add ./results
+                      git commit -m "Results update for go"
+                      git push
+                    
   nim:
     runs-on: ubuntu-latest
     steps:
@@ -69,14 +69,14 @@ jobs:
       - name: Run one container
         run: ./run-container.sh nim
       - name: Commit results
-        run:
-          - git config --global user.name 'Your Name'
-          - >-
-            git config --global user.email
-            'your-username@users.noreply.github.com'
-          - git add ./results
-          - git commit -m "Results update for nim"
-          - git push
+        run: |-
+          |
+                      git config --global user.name 'Your Name'
+                      git config --global user.email 'your-username@users.noreply.github.com'
+                      git add ./results
+                      git commit -m "Results update for nim"
+                      git push
+                    
   elixir:
     runs-on: ubuntu-latest
     steps:
@@ -86,11 +86,11 @@ jobs:
       - name: Run one container
         run: ./run-container.sh elixir
       - name: Commit results
-        run:
-          - git config --global user.name 'Your Name'
-          - >-
-            git config --global user.email
-            'your-username@users.noreply.github.com'
-          - git add ./results
-          - git commit -m "Results update for elixir"
-          - git push
+        run: |-
+          |
+                      git config --global user.name 'Your Name'
+                      git config --global user.email 'your-username@users.noreply.github.com'
+                      git add ./results
+                      git commit -m "Results update for elixir"
+                      git push
+                    
