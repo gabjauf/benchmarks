@@ -42,6 +42,9 @@ function formatJobs() {
     needs: languages.map(el => el.name),
     steps: [
       {
+        uses: "actions/checkout@v2",
+      },
+      {
         uses: "actions/download-artifact@v2",
         with: {
           name: 'results',
