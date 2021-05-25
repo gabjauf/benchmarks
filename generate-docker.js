@@ -19,11 +19,11 @@ function getTemplate(lang) {
   COPY ./package.json ./package.json
   RUN npm i --only=production
   
-  COPY ./src ./src
+  COPY ./benchmarks-source ./benchmarks-source
   COPY ./languages.json ./languages.json
   # VOLUME ./results /app/results
   
-  ENTRYPOINT ["./src/run.js"]
+  ENTRYPOINT ["./benchmarks-source/run.js"]
   `.trim();
 }
 

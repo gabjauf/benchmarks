@@ -2,9 +2,16 @@
   "name": "benchmarks",
   "version": "1.0.0",
   "description": "Benchmarks for different languages",
+  "homepage": "https://gabjauf.github.io/benchmarks",
   "main": "generate-docker.js",
   "scripts": {
-    "test": "jest"
+    "build": "react-scripts build",
+    "eject": "react-scripts eject",
+    "start": "react-scripts start",
+    "test": "jest",
+    "test-react": "react-scripts test",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "repository": {
     "type": "git",
@@ -15,12 +22,36 @@
   "bugs": {
     "url": "https://github.com/gabjauf/benchmarks/issues"
   },
-  "homepage": "https://github.com/gabjauf/benchmarks#readme",
   "dependencies": {
-    "tiny-glob": "^0.2.8"
+    "tiny-glob": "^0.2.8",
+    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "web-vitals": "^1.1.2"
   },
   "devDependencies": {
-    "jest": "^26.6.3",
+    "gh-pages": "^3.2.0",
     "js-yaml": "^4.1.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
