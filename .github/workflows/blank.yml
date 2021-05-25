@@ -4,6 +4,7 @@ name: CI
     branches:
       - master
       - testing
+      - gh-pages
   pull_request:
     branches:
       - master
