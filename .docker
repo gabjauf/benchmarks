@@ -1,5 +1,0 @@
---security-opt seccomp=seccomp-perf.json
---cap-drop=all
---security-opt no-new-privileges
---read-only
--u dev
