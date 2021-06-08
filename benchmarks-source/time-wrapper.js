@@ -59,7 +59,7 @@ function durationToSeconds(duration) {
     result += parseInt(splittedDuration[1]) * 60;
     result += parseFloat(splittedDuration[2]);
   }
-  return result.toString();
+  return result;
 }
 
 /**

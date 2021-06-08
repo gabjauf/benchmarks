@@ -35,13 +35,13 @@ if (require.main === module) {
     // res.push(...dataToArray(executionData));
     // res.push(...dataToArray(compilingData));
     // return res.join(";") + '\n';
-    return JSON.stringify({
+    return {
       date: new Date(),
       lang,
       version,
       execution: executionData,
       compiling: compilingData,
-    });
+    };
   }
 
   const benchmarks = fs.readdirSync(`${__dirname}/benchmarks`, { withFileTypes: true })
@@ -51,8 +51,8 @@ if (require.main === module) {
   benchmarks.forEach(bench => {
     glob(`${__dirname}/benchmarks/${bench}/*.${langConfig.extension}`).then(files => {
       files.forEach(file => {
-        const outputDir = `${__dirname}/../results/${bench}`;
-        if (!fs.existsSync(outputDir)){
+        const outputDir = `${__dirname}/../public/results/${bench}`;
+        if (!fs.existsSync(outputDir)) {
           fs.mkdirSync(outputDir);
         }
         const outputFileName = `${outputDir}/${OS}-${getBasenameWithoutExtension(file)}-${langConfig.name}.json`;

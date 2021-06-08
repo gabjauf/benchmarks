@@ -21,7 +21,8 @@ function getTemplate(lang) {
   
   COPY ./benchmarks-source ./benchmarks-source
   COPY ./languages.json ./languages.json
-  # VOLUME ./results /app/results
+  COPY ./public ./public
+  # VOLUME ./public/results /app/public/results
   
   ENTRYPOINT ["./benchmarks-source/run.js"]
   `.trim();
