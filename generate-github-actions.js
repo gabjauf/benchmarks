@@ -52,6 +52,14 @@ function formatJobs() {
         }
       },
       {
+        name: "Deendency install",
+        run: "npm i"
+      },
+      {
+        name: "Compute Stats",
+        run: "node ./benchmarks-source/compute-stats.js"
+      },
+      {
         name: "Configurate git",
         run: `git config --global user.name 'Benchmark bot'
           git config --global user.email 'your-username@users.noreply.github.com'
