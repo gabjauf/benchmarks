@@ -83,6 +83,8 @@ jobs:
         with:
           name: results
           path: public/results/
+      - name: Compute Stats
+        run: node ./benchmarks-source/compute-stats.js
       - name: Configurate git
         run: |-
           git config --global user.name 'Benchmark bot'

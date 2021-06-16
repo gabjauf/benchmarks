@@ -10,7 +10,7 @@ export default function ChartComponent(props) {
   let data;
   if (props.data) {
     data = {
-      labels: props.data.map(el => el.date),
+      labels: props.data.map(el => el.lang),
       datasets: [
         {
           label: '# of Votes',
