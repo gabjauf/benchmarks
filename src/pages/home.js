@@ -6,7 +6,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!data) {
-      fetch("benchmarks/results/stats.json").then(
+      fetch(`${process.env.PUBLIC_URL}/results/stats.json`).then(
         function (res) {
           return res.json()
         }).then(function (data) {
