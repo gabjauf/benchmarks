@@ -11,7 +11,7 @@ const doc = yaml.load(fs.readFileSync(githubWorkflowFilePath, 'utf8'));
 doc.jobs = formatJobs();
 
 function formatJobs() {
-  let res = {};
+  let res = doc.jobs;
   languages.forEach(langConfig => {
     res[langConfig.name] = {
       "runs-on": "ubuntu-latest",
@@ -31,7 +31,7 @@ function formatJobs() {
           uses: "actions/upload-artifact@v2",
           with: {
             name: 'results',
-            path: `results/**/*${langConfig.name}.json`
+            path: `public/results/**/*${langConfig.name}.json`
           }
         }
       ],
@@ -48,7 +48,7 @@ function formatJobs() {
         uses: "actions/download-artifact@v2",
         with: {
           name: 'results',
-          path: 'results/'
+          path: 'public/results/'
         }
       },
       {
@@ -60,7 +60,7 @@ function formatJobs() {
       },
       {
         name: "Commit results",
-        run: `git add ./results
+        run: `git add ./public/results
           git commit -m "Benchmark result update"
           while ! git push; do git pull; done
         `
