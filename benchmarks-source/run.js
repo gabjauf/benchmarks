@@ -51,13 +51,14 @@ if (require.main === module) {
   benchmarks.forEach(bench => {
     glob(`${__dirname}/benchmarks/${bench}/*.${langConfig.extension}`).then(files => {
       files.forEach(file => {
+        console.log(`Running benchmark ${bench}`);
         const outputDir = `${__dirname}/../public/results/${bench}`;
         if (!fs.existsSync(outputDir)) {
           fs.mkdirSync(outputDir);
         }
         const outputFileName = `${outputDir}/${OS}-${getBasenameWithoutExtension(file)}-${langConfig.name}.json`;
         if (isLanguageVersionBenchmarked(outputFileName, version)) {
-          console.warn(`No benchmark was run because the version ${version} has already been benchmarked`);
+          console.warn(`The benchmark ${bench} was not run because the version ${version} has already been benchmarked`);
           return;
         }
         if (langConfig.compile) {
