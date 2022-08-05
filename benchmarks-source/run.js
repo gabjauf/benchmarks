@@ -56,6 +56,9 @@ if (require.main === module) {
           fs.mkdirSync(outputDir);
         }
         const outputFileName = `${outputDir}/${OS}-${getBasenameWithoutExtension(file)}-${langConfig.name}.json`;
+        if (isLanguageVersionBenchmarked(outputFileName, version)) {
+          return;
+        }
         if (langConfig.compile) {
           const compileRes = benchmarker.exec(`${langConfig.commands.compile} ${path.basename(file)}`, { cwd: `${__dirname}/benchmarks/${bench}` });
           const compiledData = benchmarker.parseOutput(compileRes);
@@ -99,6 +102,15 @@ function appendToFile(file, appendFile) {
 
 function getVersionNumber() {
   return extractVersionNumber(execSync(langConfig.commands.version).toString());
+}
+
+function isLanguageVersionBenchmarked(file, currentVersion) {
+  const hasBenchmark = fs.existsSync(file);
+  if (!hasBenchmark) {
+    return false;
+  }
+  const data = require(file);
+  return data.data.pop().version === currentVersion;
 }
 
 /**
