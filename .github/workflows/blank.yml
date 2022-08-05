@@ -77,6 +77,7 @@ jobs:
       - go
       - nim
       - elixir
+      - nodejs
     steps:
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
@@ -115,3 +116,15 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
+  nodejs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build docker images
+        run: ./build-docker.sh nodejs
+      - name: Run one container
+        run: ./run-container.sh nodejs
+      - uses: actions/upload-artifact@v2
+        with:
+          name: results
+          path: public/results/**/*nodejs.json
