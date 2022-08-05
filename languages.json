@@ -62,5 +62,17 @@
       "version": "elixir --version"
     },
     "extension": "ex"
+  },
+  {
+    "name": "nodejs",
+    "repository": "https://github.com/nodejs/node",
+    "compile": false,
+    "packages": {
+      "nix": ""
+    },
+    "commands": {
+      "version": "node --version"
+    },
+    "extension": "js"
   }
 ]
