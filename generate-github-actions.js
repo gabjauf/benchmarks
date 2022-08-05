@@ -69,8 +69,8 @@ function formatJobs() {
       {
         name: "Commit results",
         run: `git add ./public/results
-          git commit -m "Benchmark result update"
-          while ! git push; do git pull; done
+          git diff --quiet && git diff --staged --quiet || git commit -m "Benchmark result update"
+          git diff --quiet && while ! git push; do git pull; done
         `
       },
     ]

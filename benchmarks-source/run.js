@@ -57,6 +57,7 @@ if (require.main === module) {
         }
         const outputFileName = `${outputDir}/${OS}-${getBasenameWithoutExtension(file)}-${langConfig.name}.json`;
         if (isLanguageVersionBenchmarked(outputFileName, version)) {
+          console.warn(`No benchmark was run because the version ${version} has already been benchmarked`);
           return;
         }
         if (langConfig.compile) {
