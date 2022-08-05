@@ -1,5 +1,5 @@
 FROM nixos/nix:latest
 
-RUN nix-env -iA nixpkgs.linuxPackages.perf nixpkgs.nodejs
+RUN nix-env -iA nixpkgs.linuxPackages.perf nixpkgs.nodejs nixpkgs.time
 
 ENTRYPOINT [ "/bin/bash" ]
