@@ -71,7 +71,8 @@
       "nix": ""
     },
     "commands": {
-      "version": "node --version"
+      "version": "node --version",
+      "run": "node"
     },
     "extension": "js"
   }

@@ -68,7 +68,7 @@ if (require.main === module) {
           const executionData = benchmarker.parseOutput(res);
           appendToFile(outputFileName, formatOutput(executionData, compiledData));
         } else {
-          const res = benchmarker.exec(`${langConfig.name} ${path.basename(file)}`, { cwd: `${__dirname}/benchmarks/${bench}` });
+          const res = benchmarker.exec(`${langConfig.commands.run || langConfig.name} ${path.basename(file)}`, { cwd: `${__dirname}/benchmarks/${bench}` });
           appendToFile(outputFileName, formatOutput(benchmarker.parseOutput(res)));
         }
       });
@@ -112,7 +112,7 @@ function isLanguageVersionBenchmarked(file, currentVersion) {
     return false;
   }
   const data = require(file);
-  return data.data.pop().version === currentVersion;
+  return data.data[data.data.length - 1].version === currentVersion;
 }
 
 /**
