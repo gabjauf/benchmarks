@@ -1,1 +1,0 @@
-{"data":[{"date":"2022-08-05T22:26:50.701Z","lang":"nodejs","version":"16.15.0","execution":{"time elapsed":0,"user":3.42,"system":1.04,"CPU usage":"105%","context-switches":21625,"Voluntary context switches":20008,"Involuntary context switches":1617,"page-faults":385826,"Major page-faults":0,"Minor page-faults":385826,"Maximum resident set size":77804}}]}

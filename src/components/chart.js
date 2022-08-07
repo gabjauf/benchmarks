@@ -13,7 +13,7 @@ export default function ChartComponent(props) {
       labels: props.data.map(el => el.lang),
       datasets: [
         {
-          label: '# of Votes',
+          label: 'Time elapsed (s)',
           data: props.data.map(el => el.compiling['time elapsed']),
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',

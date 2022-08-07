@@ -11,7 +11,7 @@ export default function Home() {
           return res.json()
         }).then(function (data) {
           // store Data in State Data Variable
-          setData(data.matmul)
+          setData(data.hello_world)
         }).catch(
           function (err) {
             console.log(err, ' error')
