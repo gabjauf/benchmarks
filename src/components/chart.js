@@ -14,7 +14,7 @@ export default function ChartComponent(props) {
       datasets: [
         {
           label: 'Time elapsed (s)',
-          data: props.data.map(el => el.compiling['time elapsed']),
+          data: props.data.map(el => el.execution['time elapsed']),
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
