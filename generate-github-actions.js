@@ -53,7 +53,7 @@ function formatJobs() {
       },
       {
         name: "Dependency install",
-        run: "npm ci"
+        run: "npm i"
       },
       {
         name: "Compute Stats",

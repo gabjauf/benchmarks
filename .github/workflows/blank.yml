@@ -85,7 +85,7 @@ jobs:
           name: results
           path: public/results/
       - name: Dependency install
-        run: npm ci
+        run: npm i
       - name: Compute Stats
         run: node ./benchmarks-source/compute-stats.js
       - name: Configurate git
