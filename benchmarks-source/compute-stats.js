@@ -14,7 +14,7 @@ if (require.main === module) {
         return;
       }
       const content = require(`${__dirname}/../${file}`);
-      const benchmark = file.split('/')[2];
+      const benchmark = file.split('/')[1];
       const lastRow = content.data[content.data.length - 1];
       res[benchmark] = [...(res[benchmark] || []), lastRow];
     });

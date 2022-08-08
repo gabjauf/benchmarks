@@ -21,7 +21,7 @@ export default function Index({ allPosts }: Props) {
 
   useEffect(() => {
     if (!data) {
-      fetch(`https://raw.githubusercontent.com/gabjauf/benchmarks/master/public/results/stats.json`).then(
+      fetch(`https://raw.githubusercontent.com/gabjauf/benchmarks/master/results/stats.json`).then(
         function (res) {
           return res.json()
         }).then(function (data) {
