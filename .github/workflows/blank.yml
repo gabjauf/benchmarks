@@ -111,9 +111,9 @@ jobs:
       - name: Change to web dir
         run: ls && cd ./web && pwd
       - name: Install dependencies
-        run: yarn
+        run: ls && pwd && yarn
       - name: Build
-        run: yarn build && touch ./out/.nojekyll
+        run: ls && pwd && yarn build && touch ./out/.nojekyll
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: github.ref == 'refs/heads/master'
