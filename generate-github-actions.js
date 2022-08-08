@@ -31,7 +31,7 @@ function formatJobs() {
           uses: "actions/upload-artifact@v2",
           with: {
             name: 'results',
-            path: `public/results/**/*${langConfig.name}.json`
+            path: `results/**/*${langConfig.name}.json`
           }
         }
       ],
@@ -48,7 +48,7 @@ function formatJobs() {
         uses: "actions/download-artifact@v2",
         with: {
           name: 'results',
-          path: 'public/results/'
+          path: 'results/'
         }
       },
       {
@@ -68,8 +68,8 @@ function formatJobs() {
       },
       {
         name: "Commit results",
-        run: `git add ./public/results
-          git diff --quiet ./public/results && git diff --staged --quiet ./public/results || git commit -m "Benchmark result update"`
+        run: `git add ./results
+          git diff --quiet ./results && git diff --staged --quiet ./results || git commit -m "Benchmark result update"`
       },
       {
         name: "Publish results",

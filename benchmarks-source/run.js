@@ -52,7 +52,7 @@ if (require.main === module) {
     glob(`${__dirname}/benchmarks/${bench}/*.${langConfig.extension}`).then(files => {
       files.forEach(file => {
         console.log(`Running benchmark ${bench}`);
-        const outputDir = `${__dirname}/../public/results/${bench}`;
+        const outputDir = `${__dirname}/../results/${bench}`;
         if (!fs.existsSync(outputDir)) {
           fs.mkdirSync(outputDir);
         }

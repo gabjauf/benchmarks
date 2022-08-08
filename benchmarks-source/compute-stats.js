@@ -2,13 +2,13 @@
 const glob = require('tiny-glob');
 const fs = require('fs');
 
-const statsPath = `${__dirname}/../public/results/stats.json`;
+const statsPath = `${__dirname}/../results/stats.json`;
 const exclude = ['public/results/stats.json'];
 
 if (require.main === module) {
 
   const res = {};
-  glob(`${__dirname}/../public/results/**/*.json`).then(files => {
+  glob(`${__dirname}/../results/**/*.json`).then(files => {
     files.forEach(file => {
       if (exclude.includes(file)) {
         return;

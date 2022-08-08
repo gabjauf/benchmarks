@@ -20,7 +20,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: results
-          path: public/results/**/*zig.json
+          path: results/**/*zig.json
   rust:
     runs-on: ubuntu-latest
     steps:
@@ -32,7 +32,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: results
-          path: public/results/**/*rust.json
+          path: results/**/*rust.json
   go:
     runs-on: ubuntu-latest
     steps:
@@ -44,7 +44,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: results
-          path: public/results/**/*go.json
+          path: results/**/*go.json
   nim:
     runs-on: ubuntu-latest
     steps:
@@ -56,7 +56,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: results
-          path: public/results/**/*nim.json
+          path: results/**/*nim.json
   elixir:
     runs-on: ubuntu-latest
     steps:
@@ -68,7 +68,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: results
-          path: public/results/**/*elixir.json
+          path: results/**/*elixir.json
   commit_results:
     runs-on: ubuntu-latest
     needs:
@@ -85,7 +85,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: results
-          path: public/results/
+          path: results/
       - name: Dependency install
         run: npm i
       - name: Compute Stats
@@ -98,8 +98,8 @@ jobs:
                   
       - name: Commit results
         run: |-
-          git add ./public/results
-                    git diff --quiet ./public/results && git diff --staged --quiet ./public/results || git commit -m "Benchmark result update"
+          git add ./results
+                    git diff --quiet ./results && git diff --staged --quiet ./results || git commit -m "Benchmark result update"
       - name: Publish results
         run: while ! git push; do git pull; done
   deploy:
@@ -108,16 +108,18 @@ jobs:
       - commit_results
     steps:
       - uses: actions/checkout@v2
+      - name: Changeto web dir
+        run: cd web
       - name: Install dependencies
-        run: npm i
+        run: yarn
       - name: Build
-        run: npm run predeploy
+        run: yarn build && touch ./out/.nojekyll
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: github.ref == 'refs/heads/master'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./out
   nodejs:
     runs-on: ubuntu-latest
     steps:
@@ -129,7 +131,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: results
-          path: public/results/**/*nodejs.json
+          path: results/**/*nodejs.json
   v:
     runs-on: ubuntu-latest
     steps:
@@ -141,7 +143,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: results
-          path: public/results/**/*v.json
+          path: results/**/*v.json
   c_gcc:
     runs-on: ubuntu-latest
     steps:
@@ -153,4 +155,4 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: results
-          path: public/results/**/*c_gcc.json
+          path: results/**/*c_gcc.json
