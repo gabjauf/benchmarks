@@ -109,7 +109,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Change to web dir
-        run: cd ./web
+        run: ls && cd ./web && pwd
       - name: Install dependencies
         run: yarn
       - name: Build
