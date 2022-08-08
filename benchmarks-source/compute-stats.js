@@ -3,7 +3,7 @@ const glob = require('tiny-glob');
 const fs = require('fs');
 
 const statsPath = `${__dirname}/../results/stats.json`;
-const exclude = ['public/results/stats.json'];
+const exclude = ['results/stats.json'];
 
 if (require.main === module) {
 
