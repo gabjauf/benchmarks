@@ -18,7 +18,7 @@ if (require.main === module) {
       const lastRow = content.data[content.data.length - 1];
       res[benchmark] = [...(res[benchmark] || []), lastRow];
     });
-    console.log(res);
+    console.log(JSON.stringify(res, null, 2));
     fs.writeFileSync(statsPath, JSON.stringify(res));
   });
 }

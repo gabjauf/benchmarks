@@ -27,6 +27,7 @@ function exec(command, options) {
  * @param {string} output 
  */
 function parseOutput(output) {
+  console.log(output);
   const lines = output.split('\n');
   return {
     'time elapsed': durationToSeconds(extractLineStat(lines[4])),
