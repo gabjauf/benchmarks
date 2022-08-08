@@ -108,8 +108,8 @@ jobs:
       - commit_results
     steps:
       - uses: actions/checkout@v2
-      - name: Changeto web dir
-        run: cd web
+      - name: Change to web dir
+        run: cd ./web
       - name: Install dependencies
         run: yarn
       - name: Build
