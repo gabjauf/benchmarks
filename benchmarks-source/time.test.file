@@ -2,7 +2,7 @@ Command being timed: "rustc ./benchmarks/brainfuck/bf.rs"
         User time (seconds): 0.63
         System time (seconds): 0.26
         Percent of CPU this job got: 64%
-        Elapsed (wall clock) time (h:mm:ss or m:ss): 0m 1.40s
+        Elapsed (wall clock) time (h:mm:ss or m:ss): 5:43.21
         Average shared text size (kbytes): 0
         Average unshared data size (kbytes): 0
         Average stack size (kbytes): 0

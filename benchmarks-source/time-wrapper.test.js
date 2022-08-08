@@ -6,21 +6,21 @@ describe('time wrapper', () => {
   describe('extractLineStat', () => {
     test('it should get the total time spent', () => {
       const lines = file.split('\n');
-      expect(extractLineStat(lines[4])).toEqual('0m 1.40s');
+      expect(extractLineStat(lines[4])).toEqual('5:43.21');
     });
   });
 
   describe('durationToSeconds', () => {
     test('it should parse seconds', () => {
-      expect(durationToSeconds('0m 1.41s')).toEqual('1.41');
+      expect(durationToSeconds('0:32.11')).toEqual(32.11);
     });
 
     test('it should parse minutes', () => {
-      expect(durationToSeconds('2m 1.42s')).toEqual('121.42');
+      expect(durationToSeconds('54:32.11')).toEqual(3272.11);
     });
 
     test('it should parse hours', () => {
-      expect(durationToSeconds('1h 0m 1.43s')).toEqual('3601.43');
+      expect(durationToSeconds('6:54:32.11')).toEqual(24872.11);
     });
   })
 });

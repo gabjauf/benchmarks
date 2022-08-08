@@ -48,18 +48,15 @@ function parseOutput(output) {
  * @param {string} duration 
  */
 function durationToSeconds(duration) {
-  const splittedDuration = duration.split(' ');
-  let result = 0;
-  if (splittedDuration.length === 2) {
-    result += parseInt(splittedDuration[0]) * 60;
-    result += parseFloat(splittedDuration[1]);
+  let p = duration.split(':'),
+    s = 0, m = 1;
+
+  while (p.length > 0) {
+    s += m * parseFloat(p.pop(), 10);
+    m *= 60;
   }
-  if (splittedDuration.length === 3) {
-    result += parseInt(splittedDuration[0]) * 3600;
-    result += parseInt(splittedDuration[1]) * 60;
-    result += parseFloat(splittedDuration[2]);
-  }
-  return result;
+
+  return s;
 }
 
 /**
@@ -67,7 +64,7 @@ function durationToSeconds(duration) {
  * @param {string} line
  */
 function extractLineStat(line) {
-  const splittedLine = line.trim().split(':').map(item => item.trim());
+  const splittedLine = line.trim().split(': ').map(item => item.trim());
   return splittedLine[splittedLine.length - 1];
 }
 
