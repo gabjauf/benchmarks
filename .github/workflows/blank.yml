@@ -108,18 +108,18 @@ jobs:
       - commit_results
     steps:
       - uses: actions/checkout@v2
-      - name: Change to web dir
-        run: ls && cd ./web && pwd
       - name: Install dependencies
-        run: ls && pwd && yarn
+        working-directory: ./web
+        run: yarn
       - name: Build
-        run: ls && pwd && yarn build && touch ./out/.nojekyll
+        working-directory: ./web
+        run: yarn build && touch ./out/.nojekyll
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: github.ref == 'refs/heads/master'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./out
+          publish_dir: ./web/out
   nodejs:
     runs-on: ubuntu-latest
     steps:
