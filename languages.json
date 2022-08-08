@@ -78,7 +78,7 @@
   },
   {
     "name": "v",
-    "repository": "https://github.com/nodejs/node",
+    "repository": "https://github.com/vlang/v",
     "compile": true,
     "packages": {
       "nix": "nixpkgs.vlang"
