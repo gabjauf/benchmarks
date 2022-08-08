@@ -69,7 +69,7 @@ function formatJobs() {
       {
         name: "Commit results",
         run: `git add ./public/results
-          git diff --quiet && git diff --staged --quiet || git commit -m "Benchmark result update"`
+          git diff --quiet ./public/results && git diff --staged --quiet ./public/results || git commit -m "Benchmark result update"`
       },
       {
         name: "Publish results",
