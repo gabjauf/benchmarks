@@ -88,5 +88,18 @@
       "compile": "v"
     },
     "extension": "v"
+  },
+  {
+    "name": "c_gcc",
+    "repository": "https://github.com/gcc-mirror/gcc",
+    "compile": true,
+    "packages": {
+      "nix": "nixpkgs.gcc"
+    },
+    "commands": {
+      "version": "gcc --version",
+      "compile": "gcc -o ${file_basename}"
+    },
+    "extension": "c"
   }
 ]

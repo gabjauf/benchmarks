@@ -79,6 +79,7 @@ jobs:
       - elixir
       - nodejs
       - v
+      - c_gcc
     steps:
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
@@ -141,3 +142,15 @@ jobs:
         with:
           name: results
           path: public/results/**/*v.json
+  c_gcc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build docker images
+        run: ./build-docker.sh c_gcc
+      - name: Run one container
+        run: ./run-container.sh c_gcc
+      - uses: actions/upload-artifact@v2
+        with:
+          name: results
+          path: public/results/**/*c_gcc.json
