@@ -78,6 +78,7 @@ jobs:
       - nim
       - elixir
       - nodejs
+      - v
     steps:
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
@@ -128,3 +129,15 @@ jobs:
         with:
           name: results
           path: public/results/**/*nodejs.json
+  v:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build docker images
+        run: ./build-docker.sh v
+      - name: Run one container
+        run: ./run-container.sh v
+      - uses: actions/upload-artifact@v2
+        with:
+          name: results
+          path: public/results/**/*v.json

@@ -75,5 +75,18 @@
       "run": "node"
     },
     "extension": "js"
+  },
+  {
+    "name": "v",
+    "repository": "https://github.com/nodejs/node",
+    "compile": true,
+    "packages": {
+      "nix": "nixpkgs.vlang"
+    },
+    "commands": {
+      "version": "v version",
+      "compile": "v"
+    },
+    "extension": "v"
   }
 ]
