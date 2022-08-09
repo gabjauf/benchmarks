@@ -80,6 +80,7 @@ jobs:
       - nodejs
       - v
       - c_gcc
+      - pony
     steps:
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
@@ -156,3 +157,15 @@ jobs:
         with:
           name: results
           path: results/**/*c_gcc.json
+  pony:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build docker images
+        run: ./build-docker.sh pony
+      - name: Run one container
+        run: ./run-container.sh pony
+      - uses: actions/upload-artifact@v2
+        with:
+          name: results
+          path: results/**/*pony.json

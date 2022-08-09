@@ -62,8 +62,10 @@ if (require.main === module) {
           return;
         }
         if (langConfig.compile) {
-          const compileCommand = langConfig.commands.compile.replace('${file_basename}', getBasenameWithoutExtension(file));
-          const compileRes = benchmarker.exec(`${compileCommand} ${path.basename(file)}`, { cwd: `${__dirname}/benchmarks/${bench}` });
+          const compileCommand = langConfig.commands.compile
+            .replace('${file_output_name}', getBasenameWithoutExtension(file))
+            .replace('${file_input_name}', path.basename(file));
+          const compileRes = benchmarker.exec(`${compileCommand}`, { cwd: `${__dirname}/benchmarks/${bench}` });
           const compiledData = benchmarker.parseOutput(compileRes);
           const res = benchmarker.exec(`./${getBasenameWithoutExtension(file)}`, { cwd: `${__dirname}/benchmarks/${bench}` });
           const executionData = benchmarker.parseOutput(res);

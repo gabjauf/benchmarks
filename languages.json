@@ -8,7 +8,7 @@
     },
     "extension": "zig",
     "commands": {
-      "compile": "zig build-exe",
+      "compile": "zig build-exe ${file_input_name}",
       "version": "zig version"
     }
   },
@@ -21,7 +21,7 @@
     },
     "extension": "rs",
     "commands": {
-      "compile": "rustc",
+      "compile": "rustc ${file_input_name}",
       "version": "rustc --version"
     }
   },
@@ -34,7 +34,7 @@
     },
     "extension": "go",
     "commands": {
-      "compile": "go build",
+      "compile": "go build ${file_input_name}",
       "version": "go version"
     }
   },
@@ -46,7 +46,7 @@
       "nix": "nixpkgs.nim nixpkgs.gcc"
     },
     "commands": {
-      "compile": "nim c",
+      "compile": "nim c ${file_input_name}",
       "version": "nim -v"
     },
     "extension": "nim"
@@ -85,7 +85,7 @@
     },
     "commands": {
       "version": "v version",
-      "compile": "v"
+      "compile": "v ${file_input_name}"
     },
     "extension": "v"
   },
@@ -98,8 +98,21 @@
     },
     "commands": {
       "version": "gcc --version",
-      "compile": "gcc -o ${file_basename}"
+      "compile": "gcc -o ${file_output_name} ${file_input_name}"
     },
     "extension": "c"
+  },
+  {
+    "name": "pony",
+    "repository": "https://github.com/ponylang/ponyc",
+    "compile": true,
+    "packages": {
+      "nix": "nixpkgs.ponyc"
+    },
+    "commands": {
+      "version": "ponyc --version",
+      "compile": "ponyc -b ${file_output_name}"
+    },
+    "extension": "pony"
   }
 ]
